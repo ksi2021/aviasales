@@ -1,0 +1,86 @@
+
+body {
+  background-color: #F3F7FA;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 8px 0px #0000001A;
+  width: 232px;
+  height: 262px;
+  border-radius: 5px;
+  //padding: 15px 0 0 15px;
+
+
+  .title {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    line-height: 12px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 20px 10px 10px 10px ;
+  }
+
+  .visualCheckBox {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    border: 2px solid #9abbce;
+  }
+
+  .item {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    cursor: pointer;
+    padding: 10px 0 10px 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+      background-color: aliceblue;
+    }
+  }
+
+  .checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+
+    &:focus {
+      ~ .visualCheckBox {
+        border-color: #2196f3;
+      }
+    }
+
+    &:checked {
+      ~ .visualCheckBox {
+        border-color: #2196f3;
+        background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg fill='none' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.28571 8L0 4.16123L1.20857 3.0787L4.28571 5.82726L10.7914 0L12 1.09021L4.28571 8Z' fill='%232196F3'/%3E%3C/svg%3E%0A");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 12px;
+      }
+    }
+
+    &:focus:checked {
+      ~ .visualCheckBox {
+        border-color: #2196f3;
+      }
+    }
+  }
+}
