@@ -1,4 +1,4 @@
-import { useEffect }  from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import SideBar from '../filter/filter';
@@ -9,24 +9,22 @@ import classes from './app.module.scss';
 import Logo from './Logo.png';
 
 const fetchTickets = () => {
-  return async function(dispatch) {
+  return async function (dispatch) {
     const loop = async () => {
       const part = await getTickets();
-      console.log(part);
-      dispatch(
-        // addTickets(part)
-        { type: 'ADD_TICKETS', part }
-      );
+      dispatch({ type: 'ADD_TICKETS', part });
+      if (part.error) dispatch({ type: 'ADD_ERROR', part });
+      if (part.stop) dispatch({ type: 'LOAD_COMPLETE' });
       if (!part.stop) loop();
     };
     await loop();
   };
 };
-function App({ fetchTicketsProp }) {
 
-  useEffect(()=>{
+function App({ fetchTicketsProp }) {
+  useEffect(() => {
     fetchTicketsProp();
-  },[]);
+  }, []);
   return (
     <div className="App">
       <div className={classes.logo}>

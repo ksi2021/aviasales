@@ -7,9 +7,10 @@ const initialState = {
     transfer_3: true,
   },
   data: [],
-  sort:'cheap',
-  currentData: [],
-  availableTicketCount:5,
+  sort: 'cheap',
+  errorCounter: 0,
+  loading: true,
+  availableTicketCount: 5,
 };
 
 // eslint-disable-next-line default-param-last
@@ -20,7 +21,7 @@ const reducer = (state = initialState, action) => {
   case 'ADD_TICKETS':
     return {
       ...state,
-      data: [...state.data, ...action.part.tickets]
+      data: [...state.data, ...action.part.tickets],
     };
   case 'ADD_COUNT':
     return {
@@ -28,9 +29,19 @@ const reducer = (state = initialState, action) => {
       availableTicketCount: state.availableTicketCount + 5,
     };
   case 'CHANGE_SORT':
-    return{
+    return {
       ...state,
-      sort: action.payload
+      sort: action.payload,
+    };
+  case 'ADD_ERROR':
+    return {
+      ...state,
+      errorCounter: state.errorCounter + 1,
+    };
+  case 'LOAD_COMPLETE':
+    return {
+      ...state,
+      loading: false,
     };
   default:
     return state;
