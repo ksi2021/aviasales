@@ -1,40 +1,47 @@
+import axios from 'axios';
+
 const baseUrl = 'https://aviasales-test-api.kata.academy';
 
-const fetchTickets = (url) => {
-  return (
-    fetch(url)
-      .then((res) => res.json())
-      // eslint-disable-next-line consistent-return
-      .then((res) => {
-        if (res.tickets || res.stop) return { stop: res.stop, tickets: res.tickets, error: false };
-      })
-      .catch(() => {
-        return { stop: false, tickets: [], error: true };
-      })
-  );
+const fetchTickets = async (url) => {
+  try {
+    const response = await axios.get(url);
+    const json = response.data;
+    if (json.tickets || json.stop) return { stop: json.stop, tickets: json.tickets, error: false };
+  } catch (error) {
+    console.error('Ошибка при выполнении запроса:', error);
+    return { stop: false, tickets: [], error: true };
+  }
 };
 
-const setSearchId = () => {
+const setSearchId = async () => {
   const sId = sessionStorage.getItem('searchId');
   if (sId) return sId;
 
-  return fetch(`${baseUrl}/search`)
-    .then((res) => res.json())
-    .then(({ searchId }) => {
-      sessionStorage.setItem('searchId', searchId);
-      return searchId;
-    });
+  try {
+    const response = await axios.get(`${baseUrl}/search`);
+    const { searchId } = response.data;
+    sessionStorage.setItem('searchId', searchId);
+    return searchId;
+  } catch (error) {
+    console.error('Ошибка при выполнении запроса:', error);
+  }
 };
 
 const getTickets = async () => {
-  const searchId = await setSearchId();
+  try {
+    const searchId = await setSearchId();
+    const url = `${baseUrl}/tickets?searchId=${searchId}`;
+    const response = await fetchTickets(url);
 
-  const url = `${baseUrl}/tickets?searchId=${searchId}`;
-
-  const res = await fetchTickets(url);
-  if (res.stop) sessionStorage.removeItem('searchId');
-
-  return res;
+    if (response.stop) {
+      sessionStorage.removeItem('searchId');
+    }
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('Ошибка при выполнении запроса:', error);
+    // Обработка ошибки
+  }
 };
 
 export default getTickets;

@@ -15,6 +15,9 @@ function Tabs({ changeSort, sort }) {
       <div className={sort === 'fast' && classes.active} id="fast" onClick={onClickHandler}>
         САМЫЙ БЫСТРЫЙ
       </div>
+      <div className={sort === 'optimal' && classes.active} id="optimal" onClick={onClickHandler}>
+        ОПТИМАЛЬНЫЙ
+      </div>
     </div>
   );
 }

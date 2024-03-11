@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { format, addMinutes } from 'date-fns';
 
 import classes from './route.module.scss';
@@ -22,7 +21,9 @@ function Route({ data }) {
         <div className={classes.label}>
           {origin}-{destination}
         </div>
-        <div className={classes.data}>{startDate} - {endDate}</div>
+        <div className={classes.data}>
+          {startDate} - {endDate}
+        </div>
       </div>
       <div>
         <div className={classes.label}>В ПУТИ</div>

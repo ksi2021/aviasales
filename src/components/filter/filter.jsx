@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import classes from './filter.module.scss';
+import FilterItem from './item';
 
 function SideBar({ filters, changeFilters }) {
   const changeCheckBox = (e) => {
@@ -19,63 +20,21 @@ function SideBar({ filters, changeFilters }) {
     changeFilters(newFilters);
   };
 
+  const items = [
+    { value: 'Все', name: 'all' },
+    { value: 'Без пересадок', name: 'transfer_0' },
+    { value: '1 Пересадка', name: 'transfer_1' },
+    { value: '2 Пересадки', name: 'transfer_2' },
+    { value: '3 Пересадки', name: 'transfer_3' },
+  ];
+
   // console.log(filters);
   return (
     <div className={classes.sidebar}>
       <span className={classes.title}>КОЛИЧЕСТВО ПЕРЕСАДОК</span>
-      <label className={classes.item}>
-        <input
-          onChange={changeCheckBox}
-          type="checkbox"
-          checked={filters.all && true}
-          className={classes.checkbox}
-          name="all"
-        />
-        <span className={classes.visualCheckBox}></span>
-        Все
-      </label>
-      <label className={classes.item}>
-        <input
-          onChange={changeCheckBox}
-          type="checkbox"
-          checked={filters.transfer_0 && true}
-          className={classes.checkbox}
-          name="transfer_0"
-        />
-        <span className={classes.visualCheckBox}></span>
-        Без пересадок
-      </label>
-      <label className={classes.item}>
-        <input
-          onChange={changeCheckBox}
-          type="checkbox"
-          checked={filters.transfer_1 && true}
-          className={classes.checkbox}
-          name="transfer_1"
-        />
-        <span className={classes.visualCheckBox}></span>1 Пересадка
-      </label>
-      <label className={classes.item}>
-        <input
-          onChange={changeCheckBox}
-          type="checkbox"
-          checked={filters.transfer_2 && true}
-          className={classes.checkbox}
-          name="transfer_2"
-        />
-        <span className={classes.visualCheckBox}></span>2 Пересадки
-      </label>
-      <label className={classes.item}>
-        <input
-          onChange={changeCheckBox}
-          type="checkbox"
-          checked={filters.transfer_3 && true}
-          className={classes.checkbox}
-          name="transfer_3"
-        />
-        <span className={classes.visualCheckBox}></span>3 Пересадки
-      </label>
-      {/* <button onClick={() => onChangeBox(true, 'test_key')}>click</button> */}
+      {items.map((el, id) => (
+        <FilterItem key={id} classes={classes} filters={filters} changeFilter={changeCheckBox} {...el} />
+      ))}
     </div>
   );
 }
